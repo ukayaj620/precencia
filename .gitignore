@@ -1,4 +1,5 @@
 env/
 data/
 haar/
+models/
 lfw.tgz
