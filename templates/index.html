@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+
+{% block title %} | Add User {% endblock %} 
+{% block body %}
+  <div class="d-flex flex-column align-items-center">
+    <div class="d-flex justify-content-center my-5">
+      <div class="p-3 shadow-sm">
+        <img src="{{ url_for('video') }}" width="600" />
+      </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button
+      type="submit"
+      style="width: 600px"
+      class="btn btn-primary"
+      onclick="onCaptureFaceImage('/capture_frame')"
+    >
+      Capture Face
+    </button>
+  </div>
+{% endblock %} 
+{% block js %}
+
+{% endblock %}
+  

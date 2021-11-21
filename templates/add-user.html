@@ -1,0 +1,105 @@
+{% extends "base.html" %} {% block title %} | Add User {% endblock %} {% block
+body %}
+<div class="d-flex flex-column align-items-center">
+  <div class="d-flex justify-content-center my-5">
+    <div class="p-3 shadow-sm">
+      <img src="{{ url_for('video') }}" width="600" />
+    </div>
+  </div>
+  <!-- Button trigger modal -->
+  <button
+    type="submit"
+    style="width: 600px"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#capturedImageModal"
+    onclick="onCaptureFaceImage('/capture_frame')"
+  >
+    Capture Face
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="capturedImageModal"
+    tabindex="-1"
+    aria-labelledby="capturedImageModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="capturedImageModalLabel">
+            Face Captured
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex justify-content-center">
+            <h4 id="capturedFaceImageErrorText" style="color: #b91c1c"></h4>
+            <img id="capturedFaceImage" />
+          </div>
+          <form action="{{ url_for('add_user') }}" method="POST">
+            <input
+              id="faceBase64String"
+              name="faceBase64String"
+              type="hidden"
+            />
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+              />
+            </div>
+            <div class="d-flex w-full justify-content-end">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Save User
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 
+{% block js %}
+<script>
+  const capturedFaceImage = document.getElementById("capturedFaceImage");
+  const capturedFaceImageErrorText = document.getElementById(
+    "capturedFaceImageErrorText"
+  );
+  const faceBase64StringInput = document.getElementById("faceBase64String");
+
+  const onCaptureFaceImage = (url) => {
+    capturedFaceImage.style.display = "none";
+    capturedFaceImageErrorText.innerHTML = "";
+
+    fetch(url).then(async (value) => {
+      const valueText = await value.text();
+      console.log(typeof valueText);
+      if (valueText === "Error") {
+        capturedFaceImageErrorText.innerHTML =
+          "Face not found. Please try again!";
+      } else {
+        capturedFaceImage.style.display = "block";
+        const src = `data:image/jpeg;base64,${valueText}`;
+        capturedFaceImage.src = src;
+        faceBase64StringInput.value = valueText;
+      }
+    });
+  };
+</script>
+{% endblock %}
