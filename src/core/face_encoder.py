@@ -9,8 +9,11 @@ from src.utils.preprocessing import l2_normalize, prewhiten
 class FaceEncoder:
 
     def __init__(self):
+        print("[Encoder Network] starting....")
         self.network = InceptionResNetV1()
+        print("[Encoder Network] finish initialization....")
         self.network.load_weights()
+        print("[Encoder Network] weights load successfully")
 
     def get_embedding(self, image_path=None, image_array=None):
         array = None

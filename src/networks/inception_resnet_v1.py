@@ -20,6 +20,7 @@ from src.utils.preprocessing import scaling
 class InceptionResNetV1:
 
     def __init__(self):
+        print("[Inception ResNet V1] start to initialize...")
         inputs = Input(shape=(160, 160, 3))
         x = Conv2D(32, 3, strides=2, padding='valid',
                    use_bias=False, name='Conv2d_1a_3x3')(inputs)
@@ -898,7 +899,10 @@ class InceptionResNetV1:
         # Create model
         self.model = Model(inputs, x, name='inception_resnet_v1')
         self.default_weights_path = os.getcwd() + "\src\weights\\facenet_keras_weights.h5"
+        print("[Inception ResNet V1] finish initialize...")
 
     def load_weights(self, path=None):
+        print("[Inception ResNet V1] start loading weights...")
         weights_path = self.default_weights_path if path is None else path
         self.model.load_weights(weights_path)
+        print("[Inception ResNet V1] finish loading weights...")
