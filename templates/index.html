@@ -1,25 +1,32 @@
-{% extends "base.html" %} 
-
-{% block title %} | Add User {% endblock %} 
-{% block body %}
-  <div class="d-flex flex-column align-items-center">
-    <div class="d-flex justify-content-center my-5">
-      <div class="p-3 shadow-sm">
-        <img src="{{ url_for('video') }}" width="600" />
-      </div>
+{% extends "base.html" %} {% block title %} | Check In {% endblock %} {% block
+body %}
+<div class="d-flex flex-column align-items-center">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="p-3 shadow-sm">
+      <img src="{{ url_for('video') }}" width="600" />
     </div>
-    <!-- Button trigger modal -->
-    <button
-      type="submit"
-      style="width: 600px"
-      class="btn btn-primary"
-      onclick="onCaptureFaceImage('/capture_frame')"
-    >
-      Capture Face
-    </button>
   </div>
-{% endblock %} 
-{% block js %}
+  <button
+    type="submit"
+    style="width: 600px"
+    class="btn btn-primary my-5"
+    onclick="onCaptureFaceImage('/check-in')"
+  >
+    Check In
+  </button>
+  <h4 id="checkedInText" style="color: #111827"></h4>
+</div>
+{% endblock %} {% block js %}
+<script>
+  const checkedInText = document.getElementById("checkedInText");
 
+  const onCaptureFaceImage = (url) => {
+    checkedInText.innerHTML = "";
+
+    fetch(url).then(async (value) => {
+      const valueText = await value.text();
+      checkedInText.innerHTML = valueText;
+    });
+  };
+</script>
 {% endblock %}
-  
