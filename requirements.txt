@@ -33,9 +33,10 @@ jedi==0.18.0
 Jinja2==3.0.3
 jupyter-client==7.0.6
 jupyter-core==4.8.1
-keras==2.6.0
+keras==2.7.0
 Keras-Preprocessing==1.1.2
 kiwisolver==1.3.2
+libclang==12.0.0
 Mako==1.1.6
 Markdown==3.3.4
 MarkupSafe==2.0.1
@@ -70,8 +71,9 @@ SQLAlchemy==1.4.27
 tensorboard==2.6.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
-tensorflow==2.6.0
-tensorflow-estimator==2.6.0
+tensorflow==2.7.0
+tensorflow-estimator==2.7.0
+tensorflow-io-gcs-filesystem==0.22.0
 termcolor==1.1.0
 toml==0.10.2
 tornado==6.1
