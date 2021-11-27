@@ -6,6 +6,9 @@ class TripletGenerator:
     def __init__(self):
         self.lfw_dataset_path = os.getcwd() + '\data\lfw_224_clean'
 
+    def lfw_dataset_source(self, path):
+        self.lfw_dataset_path = os.getcwd() + path
+
     def dataset_info(self):
         names = self._get_names_list()
         names_multiple_images = self._get_names_multiple_images()

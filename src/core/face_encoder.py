@@ -31,6 +31,5 @@ class FaceEncoder:
         return l2_normalize(embedding[0, :])
 
     def _preprocessing(self, image_array=None):
-        print(np.shape(image_array))
         image = np.expand_dims(image_array, axis=0)
         return prewhiten(image)

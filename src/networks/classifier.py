@@ -30,7 +30,7 @@ class ClassifierNetwork:
                             optimizer=Adam(0.002), metrics=['accuracy'])
 
     def fit(self, X_train, y_train, split=0.2):
-        return self.models.fit(X_train, y_train, validation_split=split,
+        return self.model.fit(X_train, y_train, validation_split=split,
                                callbacks=[self._scheduler_callback,
                                           self._stop_callback],
                                epochs=20, verbose=1)

@@ -10,16 +10,13 @@ class FaceDetector:
         self.mtcnn = MTCNN()
         print("[MTC Network] finish initialization....")
 
-    def extract_face(self, detector="mtcnn", image_path=None, image_array=None):
+    def extract_face(self, image_path=None, image_array=None):
         if image_path is None and image_array is None:
             raise Exception("No image specified")
         
         print("Extraction in progress")
 
-        if detector == "mtcnn":
-            return self._extract_face_mtcnn(image_path, image_array)
-        elif detector == "haar":
-            return self._extract_face_haar(image_path, image_array)
+        return self._extract_face_mtcnn(image_path, image_array)
 
     def _extract_face_mtcnn(self, image_path=None, image_array=None):
         image = None

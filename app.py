@@ -89,7 +89,6 @@ def capture_frame():
     try:
         extracted_face = face_detector.extract_face(image_array=frame)
         print(extracted_face)
-        cv2.imwrite('captured_capture_frame.jpg', img=extracted_face)
         ret, buffer = cv2.imencode('.jpg', img=extracted_face)
         base64FaceImage = base64.b64encode(buffer)
     except:
@@ -127,7 +126,6 @@ def add_user():
         user = User().query.filter_by(email=payload['email']).first()
 
         if user:
-            print('Hello')
             flash('Email has already existed', 'warning')
             return redirect(url_for('add_user'))
 
