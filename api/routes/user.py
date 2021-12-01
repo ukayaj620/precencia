@@ -10,6 +10,9 @@ from api.models import User
 
 user = Blueprint('user', __name__, template_folder='templates')
 
+user_model = User()
+
+
 @user.route('/capture-face')
 def capture_face():
     _, frame = camera.read()
@@ -30,7 +33,7 @@ def add_user():
     if request.method == 'POST':
         payload = request.form
 
-        user = User().query.filter_by(email=payload['email']).first()
+        user = user_model.query.filter_by(email=payload['email']).first()
 
         if user:
             flash('Email has already existed', 'warning')
@@ -52,7 +55,7 @@ def add_user():
         ))
         db.session.commit()
 
-        user = User().query.filter_by(email=payload['email']).first()
+        user = user_model.query.filter_by(email=payload['email']).first()
 
         flash('User has been created', 'primary')
         print(user.encoding)

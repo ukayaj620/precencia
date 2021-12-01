@@ -53,6 +53,8 @@ def video():
     return Response(get_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
+from api.models import User, Attendance
+
 from api.routes.attendance import attendance
 app.register_blueprint(attendance, url_prefix='/attendance')
 
