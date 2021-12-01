@@ -21,8 +21,8 @@
   <body style="font-family: 'Outfit', sans-serif">
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <h1 class="fw-bold" style="color: #1d4ed8">Precencia</h1>
+        <a class="navbar-brand" href="{{ url_for('index') }}">
+          <h1 class="fw-bold" style="color: #2563EB">Precencia</h1>
         </a>
         {% if request.endpoint == 'index' %}
         <a href="{{ url_for('user.add_user') }}" class="btn btn-primary">Add User</a>
