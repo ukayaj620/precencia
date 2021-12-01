@@ -11,7 +11,7 @@ body %}
   {% endif %}
 {% endwith %}
 <div class="d-flex flex-column align-items-center">
-  <div class="d-flex justify-content-center my-5">
+  <div class="d-flex justify-content-center mt-3">
     <div class="p-3 shadow-sm">
       <img src="{{ url_for('video') }}" width="600" />
     </div>
@@ -20,7 +20,7 @@ body %}
   <button
     type="submit"
     style="width: 600px; font-size: 18px;"
-    class="btn btn-primary"
+    class="btn btn-primary my-5"
     data-bs-toggle="modal"
     data-bs-target="#capturedImageModal"
     onclick="onCaptureFaceImage('/user/capture-face')"
@@ -51,7 +51,7 @@ body %}
         </div>
         <div class="modal-body">
           <div class="d-flex justify-content-center">
-            <h4 id="capturedFaceImageErrorText" style="color: #111827"></h4>
+            <h5 id="capturedFaceImageErrorText" style="color: #DC2626"></h5>
             <img id="capturedFaceImage" />
           </div>
           <form action="{{ url_for('user.add_user') }}" method="POST">
