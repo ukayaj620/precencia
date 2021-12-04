@@ -24,25 +24,3 @@ class ClassifierNetwork:
         weights_path = self.default_weights_path if path is None else path
         self.model.load_weights(weights_path)
         print("[Classifier Network] finish loading weights...")
-
-    def compile(self):
-        self.model.compile(loss='binary_crossentropy',
-                            optimizer=Adam(0.002), metrics=['accuracy'])
-
-    def fit(self, X_train, y_train, split=0.2):
-        return self.model.fit(X_train, y_train, validation_split=split,
-                               callbacks=[self._scheduler_callback,
-                                          self._stop_callback],
-                               epochs=20, verbose=1)
-
-    def _scheduler_callback(self):
-        def binary_classifier_scheduler(epoch, lr):
-            if (epoch % 5 == 0):
-                return lr * tf.math.exp(-0.1)
-
-            return lr
-
-        return LearningRateScheduler(binary_classifier_scheduler, verbose=1)
-
-    def _stop_callback(self):
-        return EarlyStopping(monitor='loss', patience=3)
