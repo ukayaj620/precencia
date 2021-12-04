@@ -30,11 +30,11 @@ class FaceDetector:
         try:
             faces = self.mtcnn.detect_faces(image)
         except:
-            print("Hello")
+            print("There is a problem when detecting face. Please try again!")
 
         if len(faces) != 1:
             raise Exception(
-                "Faces is not properly detected, Please try again!")
+                "Either zero face or more than one faces are detected. Please try again!")
         
         print("[MTCNN] Face is detected")
 
