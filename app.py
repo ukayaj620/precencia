@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from config import Config
-from src.core.face_recognizer import FaceRecognizer
+from core.face_verificator import FaceVerificator
 from src.core.face_encoder import FaceEncoder
 from src.core.face_detector import FaceDetector
 
@@ -23,7 +23,7 @@ migrate = Migrate(app, db)
 
 face_detector = FaceDetector()
 face_encoder = FaceEncoder()
-face_recognizer = FaceRecognizer()
+face_recognizer = FaceVerificator()
 
 camera = cv2.VideoCapture(0)
 
