@@ -63,10 +63,9 @@ def check_in():
                 db.session.commit()
                 return "Hello, {}! You check in on {}".format(
                     recognized_user.name, current_time.strftime("%A, %d %B %Y %I:%M%p"))
-    
+
     except:
         return "Face not found. Please try again!"
-
 
 
 @attendance.route('/check-out')
@@ -88,7 +87,7 @@ def check_out():
             if user_attendance:
                 if user_attendance.check_out_time is not None:
                     return "Hello, {}! You have already checked out on {}".format(
-                    recognized_user.name, user_attendance.check_in_time.strftime("%A, %d %B %Y %I:%M%p"))
+                        recognized_user.name, user_attendance.check_in_time.strftime("%A, %d %B %Y %I:%M%p"))
 
                 user_attendance.check_out_time = current_time
                 db.session.commit()
