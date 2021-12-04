@@ -3,7 +3,7 @@ import numpy as np
 from src.networks.classifier import ClassifierNetwork
 
 
-class FaceRecognizer:
+class FaceVerificator:
     def __init__(self):
         print("[Classifier Network] starting....")
         self.network = ClassifierNetwork()
