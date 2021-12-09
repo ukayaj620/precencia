@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from config import Config
-from core.face_verificator import FaceVerificator
+from src.core.face_verificator import FaceVerificator
 from src.core.face_encoder import FaceEncoder
 from src.core.face_detector import FaceDetector
 
