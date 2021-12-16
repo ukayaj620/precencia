@@ -37,6 +37,8 @@ def get_frame():
         if not success:
             break
         else:
+            start_point, end_point = face_detector.get_face_boundary(frame)
+            cv2.rectangle(frame, start_point, end_point, (0, 255, 0), 2)
             ret, buffer = cv2.imencode('.jpg', img=frame)
             frame_bytes = buffer.tobytes()
             yield (b'--frame\r\n'

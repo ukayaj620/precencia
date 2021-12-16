@@ -10,6 +10,18 @@ class FaceDetector:
         self.mtcnn = MTCNN()
         print("[MTC Network] finish initialization....")
 
+    def get_face_boundary(self, frame):
+        try:
+            faces = self.mtcnn.detect_faces(frame)
+        except:
+            print("There is a problem when detecting face. Please try again!")
+        
+        if len(faces) != 1:
+            return (0, 0), (0, 0)
+        
+        (x, y, w, h) = faces[0]['box']
+        return (x, y), (x + w, y + h)
+        
     def extract_face(self, image_path=None, image_array=None):
         if image_path is None and image_array is None:
             raise Exception("No image specified")
