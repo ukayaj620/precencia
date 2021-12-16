@@ -19,7 +19,6 @@ def capture_face():
 
     try:
         extracted_face = face_detector.extract_face(image_array=frame)
-        print(extracted_face)
         ret, buffer = cv2.imencode('.jpg', img=extracted_face)
         base64FaceImage = base64.b64encode(buffer)
     except:
