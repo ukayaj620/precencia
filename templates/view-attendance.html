@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %} | Check In {% endblock %} {% block
+body %}
+<div class="d-flex flex-column align-items-center">
+  <div class="col-10 mt-4">
+    <table id="attendanceDataTable" class="table table-striped">
+      <thead class="table-primary">
+        <tr style="color: #1F2937">
+          <th scope="col">ID</th>
+          <th scope="col">User ID</th>
+          <th scope="col">User Name</th>
+          <th scope="col">Check In Timestamp</th>
+          <th scope="col">Check Out Timestamp</th>
+          <th scope="col">Attendance Date</th>
+        </tr>
+      </thead>
+      <tbody class="table-light fw-semibold">
+        {% for attendance in attendance_list %}
+        <tr class="align-middle table-light" style="color: #1F2937">
+          <td scope="col">{{ 'AT{:>04}'.format(attendance.id) }}</td>
+          <td scope="col">{{ 'US{:>04}'.format(attendance.user.id) }}</td>
+          <td scope="col">{{ attendance.user.name }}</td>
+          <td scope="col">{{ attendance.check_in_time }}</td>
+          <td scope="col">{{ attendance.check_out_time }}</td>
+          <td scope="col">{{ attendance.attendance_date }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %} {% block js %}
+<script>
+  const checkedInText = document.getElementById("checkedInText");
+
+  const onCaptureFaceImage = (url) => {
+    checkedInText.innerHTML = "";
+
+    fetch(url).then(async (value) => {
+      const valueText = await value.text();
+      checkedInText.innerHTML = valueText;
+    });
+  };
+  $(document).ready(function() {
+    $('#attendanceDataTable').DataTable({
+      lengthMenu: [[5, 10, 20, -1], [5, 10, 20, "All"]]
+    });
+  });
+</script>
+{% endblock %}

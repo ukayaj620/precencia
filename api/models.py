@@ -6,7 +6,7 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True, nullable=False)
     name = db.Column(db.String(255), unique=False, nullable=False)
     encoding = db.Column(db.LargeBinary, unique=False, nullable=False)
-    attendance = db.relationship('Attendance', backref='user', lazy=True)
+    attendance = db.relationship('Attendance', back_populates='user', lazy=True)
 
     def __repr__(self):
         return str({
@@ -24,6 +24,7 @@ class Attendance(db.Model):
     attendance_date = db.Column(db.Date, nullable=False)
     check_in_time = db.Column(db.DateTime, nullable=False)
     check_out_time = db.Column(db.DateTime, nullable=True)
+    user = db.relationship('User', back_populates='attendance', lazy=True)
 
     def __repr__(self) -> str:
         return str({

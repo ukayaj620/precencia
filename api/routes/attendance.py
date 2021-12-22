@@ -1,5 +1,5 @@
+from flask import Blueprint, render_template
 from operator import and_
-from flask import Blueprint
 import pickle
 from datetime import datetime
 
@@ -33,6 +33,12 @@ def recognize_user(face_embedding):
         return checked_in_user
 
     return None
+
+
+@attendance.route('/')
+def view():
+    attendance_list = attendance_model.query.all()
+    return render_template('view-attendance.html', attendance_list=attendance_list)
 
 
 @attendance.route('/check-in')
