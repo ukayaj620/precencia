@@ -2,7 +2,7 @@
 body %}
 {% with messages = get_flashed_messages(with_categories=True) %}
   {% if messages %}
-  <div class="position-fixed bottom-0 end-0 pb-3 pe-3">
+  <div class="position-fixed bottom-0 end-0 pb-3 pe-3" style="bottom: 80px !important">
     <div class="alert alert-{{ messages[0][0] }} alert-dismissible fade show" role="alert" style="z-index: 5;">
       {{ messages[0][1] }}
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
