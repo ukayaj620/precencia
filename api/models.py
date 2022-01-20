@@ -2,6 +2,17 @@ from flask_login import UserMixin
 
 from app import db
 
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    user = db.relationship('User', back_populates='role', uselist=False)
+    
+    def __repr__(self):
+        return str({
+            "id": self.id,
+            "name": self.name
+        })
+
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
