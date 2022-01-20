@@ -1,9 +1,11 @@
 from flask import Flask, Response
 from flask.templating import render_template
+import click
 import cv2
 from dotenv import load_dotenv
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 from config import Config
 from src.core.face_verificator import FaceVerificator
@@ -15,10 +17,16 @@ load_dotenv()
 db = SQLAlchemy()
 
 app = Flask(__name__)
+
 app.config.from_object(Config)
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.login_message_category = "danger"
+login_manager.init_app(app)
 
 
 face_detector = FaceDetector()
@@ -29,6 +37,33 @@ camera = cv2.VideoCapture(0)
 
 
 print("All class sucessfully loaded!")
+
+
+from api.controllers.role import RoleController
+from api.controllers.user import UserController
+
+role_controller = RoleController()
+user_controller = UserController()
+
+@app.cli.command('seed')
+@click.argument('args')
+def seed(args):
+
+    if args == 'role':
+        role_controller.create(name='user')
+        role_controller.create(name='admin')
+        print('Role has been seeded')
+        return
+
+    if args == 'admin':
+        user_controller.create(
+            name=Config.DUMMY_ADMIN_NAME,
+            email=Config.DUMMY_ADMIN_EMAIL,
+            role_id=role_controller.fetch_by_name('admin').id,
+            password=Config.DUMMY_ADMIN_PASSWORD
+        )
+        print('Dummy admin has been seeded')
+        return
 
 
 def get_frame():
@@ -55,7 +90,9 @@ def video():
     return Response(get_frame(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-from api.models import User, Attendance
+@login_manager.user_loader
+def load_user(user_id):
+    return user_controller.fetch_by_id(user_id)
 
 from api.routes.attendance import attendance
 app.register_blueprint(attendance, url_prefix='/attendance')

@@ -5,12 +5,14 @@ import numpy as np
 import cv2
 import pickle
 
-from app import camera, face_detector, face_encoder, db
-from api.models import User
+from app import camera, face_detector, face_encoder
+from api.controllers.user import UserController
+from api.controllers.role import RoleController
 
 user = Blueprint('user', __name__, template_folder='templates')
 
-user_model = User()
+user_controller = UserController()
+role_controller = RoleController()
 
 
 @user.route('/capture-face')
@@ -32,7 +34,7 @@ def add_user():
     if request.method == 'POST':
         payload = request.form
 
-        user = user_model.query.filter_by(email=payload['email']).first()
+        user = user_controller.fetch_by_email(email=payload['email'])
 
         if user:
             flash('Email has already existed', 'warning')
@@ -47,19 +49,23 @@ def add_user():
 
         print(face_embedding)
 
-        db.session.add(User(
-            email=payload['email'],
+        user_controller.create(
             name=payload['fullName'],
-            encoding=face_byte_array
-        ))
-        db.session.commit()
+            email=payload['email'],
+            role_id=role_controller.fetch_by_name('user').id,
+        )
 
-        user = user_model.query.filter_by(email=payload['email']).first()
+        user = user_controller.fetch_by_email(email=payload['email'])
+
+        user_controller.update_face_embedding(
+            user_id=user.id,
+            embedding=face_byte_array
+        )
 
         flash('User has been created', 'primary')
-        print(user.encoding)
+        print(user.encoding.vector)
 
-        print(pickle.loads(user.encoding))
-        print(pickle.loads(user.encoding).shape)
+        print(pickle.loads(user.encoding.vector))
+        print(pickle.loads(user.encoding.vector).shape)
 
     return render_template('add-user.html')
