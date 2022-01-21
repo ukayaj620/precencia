@@ -5,17 +5,21 @@ from datetime import timedelta
 
 from api.controllers.user import UserController
 from api.controllers.role import RoleController
+from api.controllers.attendance import AttendanceController
 
 
 admin = Blueprint('admin', __name__, template_folder='templates')
 
 user_controller = UserController()
 role_controller = RoleController()
+attendance_controller = AttendanceController()
 
 @admin.route('/', methods=['GET'])
 @login_required
 def index():
-    return render_template('admin/index.html')
+    attendance_list = attendance_controller.fetch_all()
+    return render_template('admin/index.html', attendance_list=attendance_list)
+
 
 @admin.route('/login', methods=['GET', 'POST'])
 def login():
