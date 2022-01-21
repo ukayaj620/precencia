@@ -33,9 +33,20 @@
   >
     <nav class="navbar navbar-light bg-light px-4">
       <div class="container-fluid">
+        {% if request.endpoint != 'index' %}
+        <a class="navbar-brand" href="{{ url_for('admin.index') }}">
+          <h1 class="fw-bold" style="color: #2563eb">Precencia</h1>
+        </a>
+        {% else %}
         <a class="navbar-brand" href="{{ url_for('index') }}">
           <h1 class="fw-bold" style="color: #2563eb">Precencia</h1>
         </a>
+        {% endif %}
+        <div>
+          {% if request.endpoint != 'index' and current_user.is_authenticated %}
+            <p class="fw-semibold m-0">Hello, {{ current_user.name }}</p>  
+          {% endif %}
+        </div>
       </div>
     </nav>
     {% block body %} {% endblock %}
