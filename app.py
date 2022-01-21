@@ -24,8 +24,8 @@ db.init_app(app)
 migrate = Migrate(app, db)
 
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
-login_manager.login_message_category = "danger"
+login_manager.login_view = 'admin.login'
+login_manager.login_message_category = 'danger'
 login_manager.init_app(app)
 
 
@@ -99,6 +99,9 @@ app.register_blueprint(attendance, url_prefix='/attendance')
 
 from api.routes.user import user
 app.register_blueprint(user, url_prefix='/user')
+
+from api.routes.admin import admin
+app.register_blueprint(admin, url_prefix='/admin')
 
 
 if __name__ == "__main__":

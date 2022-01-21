@@ -1,0 +1,34 @@
+{% extends "layout/base.html" %} 
+
+{% block title %} | Admin Login {% endblock %} 
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  <div class="position-fixed bottom-0 end-0 pb-3 pe-3" style="bottom: 80px !important">
+    <div class="alert alert-{{ messages[0][0] }} alert-dismissible fade show" role="alert" style="z-index: 5;">
+      {{ messages[0][1] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+  {% endif %}
+{% endwith %}
+<div class="d-flex flex-column align-items-center pt-5" style="margin-bottom: 84px;">
+  <form action="{{ url_for('admin.login') }}" method="POST">
+    <div class="mb-3">
+      <label for="email" class="form-label">Email address</label>
+      <input type="email" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="remember" name="remember">
+      <label class="form-check-label" for="remember">Remember Me</label>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+</div>
+{% include "layout/footer.html" %}
+{% endblock %}
