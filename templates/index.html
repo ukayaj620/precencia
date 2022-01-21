@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %} | Check In {% endblock %} {% block
+{% extends "layout/base.html" %} {% block title %} | Check In {% endblock %} {% block
 body %}
 <div class="d-flex flex-column align-items-center" style="margin-bottom: 84px;">
   <div class="d-flex justify-content-center mt-3">
@@ -26,6 +26,7 @@ body %}
   </div>
   <h5 id="checkedInText" style="color: #27272A; width: 640px; text-align: center;"></h5>
 </div>
+{% include "layout/footer.html" %}
 {% endblock %} {% block js %}
 <script>
   const checkedInText = document.getElementById("checkedInText");
