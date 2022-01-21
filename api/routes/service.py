@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
 import pickle
 from datetime import datetime
 
@@ -6,7 +6,7 @@ from app import camera, face_detector, face_encoder, face_recognizer
 from api.controllers.attendance import AttendanceController
 from api.controllers.user import UserController
 
-attendance = Blueprint('attendance', __name__, template_folder='templates')
+service = Blueprint('service', __name__, template_folder='templates')
 
 user_controller = UserController()
 attendance_controller = AttendanceController()
@@ -39,13 +39,7 @@ def recognize_user(face_embedding):
     return None
 
 
-@attendance.route('/')
-def view():
-    attendance_list = attendance_controller.fetch_all()
-    return render_template('view-attendance.html', attendance_list=attendance_list)
-
-
-@attendance.route('/check-in')
+@service.route('/check-in')
 def check_in():
     _, frame = camera.read()
 
@@ -74,7 +68,7 @@ def check_in():
         return "Face not found. Please try again!"
 
 
-@attendance.route('/check-out')
+@service.route('/check-out')
 def check_out():
     _, frame = camera.read()
 
