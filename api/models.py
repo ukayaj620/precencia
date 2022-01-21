@@ -15,18 +15,6 @@ class Role(db.Model):
         })
 
 
-class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(255), unique=True, nullable=False)
-    user = db.relationship('User', back_populates='role', uselist=False)
-
-    def __repr__(self):
-        return str({
-            "id": self.id,
-            "name": self.name
-        })
-
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(255), unique=True, nullable=False)
