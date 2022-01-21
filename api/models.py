@@ -40,7 +40,7 @@ class User(UserMixin, db.Model):
 class Encoding(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey(
-        'user.id', ondelete='CASCADE'), unique=False, nullable=False)
+        'user.id', ondelete='CASCADE'), unique=True, nullable=False)
     vector = db.Column(db.LargeBinary, unique=False, nullable=True)
     user = db.relationship('User', back_populates='encoding', lazy=True)
 

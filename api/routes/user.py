@@ -34,7 +34,8 @@ def detect_face():
 @user.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    users = user_controller.fetch_all()
+    role = role_controller.fetch_by_name('user')
+    users = user_controller.fetch_by_role(role=role)
     return render_template('admin/user/index.html', users=users)
 
 
@@ -42,6 +43,7 @@ def index():
 def create():
     payload = request.form
     user = user_controller.fetch_by_email(email=payload['email'])
+
     if user:
         flash('Email has already existed', 'warning')
     else:
@@ -52,6 +54,35 @@ def create():
         )
         flash('User has been created', 'primary')
 
+    return redirect(url_for('admin.user.index'))
+
+
+@user.route('/update', methods=['POST'])
+def update():
+    payload = request.form
+
+    user_prev_email = user_controller.fetch_by_id(id=payload['userId']).email
+    user = user_controller.fetch_by_email(email=payload['email'])
+
+    if user and user_prev_email != user.email:
+        flash('Email has already existed', 'warning')
+    else:
+        user = user_controller.update(
+            user_id=payload['userId'],
+            name=payload['fullName'],
+            email=payload['email']
+        )
+        flash("User {}'s data has been updated".format(user.name), 'primary')
+
+    return redirect(url_for('admin.user.index'))
+
+
+@user.route('/delete', methods=['POST'])
+def delete():
+    payload = request.form
+    user_controller.delete(user_id=payload['userId'])
+
+    flash("User {}'s data has been deleted".format(user.name), 'primary')
     return redirect(url_for('admin.user.index'))
 
 
