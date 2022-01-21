@@ -1,0 +1,132 @@
+{% extends "layout/base.html" %} 
+
+{% block title %} | Home {% endblock %} 
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  <div class="position-fixed bottom-0 end-0 pb-3 pe-3" style="bottom: 80px !important">
+    <div class="alert alert-{{ messages[0][0] }} alert-dismissible fade show" role="alert" style="z-index: 5;">
+      {{ messages[0][1] }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
+  {% endif %}
+{% endwith %}
+<div class="d-flex flex-column align-items-center">
+  <div class="col-10 mt-4 d-flex flex-row align-items-center justify-content-between">
+    <h3 class="fw-semibold text-dark">Users</h3>
+    <button type="button" data-bs-toggle="modal" data-bs-target="#addUserModal" class="btn btn-primary">Add User</button>
+  </div>
+  <div class="col-10 mt-4">
+    <table id="userDataTable" class="table table-hover">
+      <thead class="table-primary">
+        <tr style="color: #1F2937">
+          <th scope="col">ID</th>
+          <th scope="col">Full Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Role</th>
+          <th scope="col">Encodings</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-light fw-semibold">
+        {% for user in users %}
+        <tr class="align-middle table-light" style="color: #1F2937">
+          <td scope="col">{{ 'US{:>04}'.format(user.id) }}</td>
+          <td scope="col">{{ user.name }}</td>
+          <td scope="col">{{ user.email }}</td>
+          <td scope="col">{{ user.role.name.capitalize() }}</td>
+          <td scope="col">
+            <form action="{{ url_for('admin.user.capture_face') }}" method="POST">
+              <input type="hidden" value="{{ user.id }}" name="userId">
+              <button type="submit" class="btn btn-primary" style="width: 124px;">
+                {% if user.encoding.vector %}
+                  Update Face
+                {% else %}
+                  Register Face
+                {% endif %}
+              </button>
+            </form>
+          </td>
+          <td scope="col">
+            <a href="#" class="btn btn-secondary me-2">
+              Update
+            </a>
+            <a href="#" class="btn btn-light">
+              Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="addUserModal"
+    tabindex="-1"
+    aria-labelledby="addUserModelLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addUserModelLabel">
+            Register New User
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ url_for('admin.user.create') }}" method="POST">
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="fullName"
+                name="fullName"
+                placeholder="Full Name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="user@skematiclabs.com"
+              />
+            </div>
+            <div class="d-flex w-100 justify-content-end">
+              <button
+                type="submit"
+                class="btn btn-primary w-100"
+                data-bs-dismiss="modal"
+              >
+                Register User
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<script>
+  $(document).ready(function() {
+    $('#userDataTable').DataTable({
+      lengthMenu: [[10, 15, 20, -1], [10, 15, 20, "All"]]
+    });
+  });
+</script>
+{% endblock %}

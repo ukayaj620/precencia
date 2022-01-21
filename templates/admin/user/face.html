@@ -1,16 +1,6 @@
-{% extends "layout/base.html" %} {% block title %} | Add User {% endblock %} {% block
-body %}
-{% with messages = get_flashed_messages(with_categories=True) %}
-  {% if messages %}
-  <div class="position-fixed bottom-0 end-0 pb-3 pe-3" style="bottom: 80px !important">
-    <div class="alert alert-{{ messages[0][0] }} alert-dismissible fade show" role="alert" style="z-index: 5;">
-      {{ messages[0][1] }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  </div>
-  {% endif %}
-{% endwith %}
-<div class="d-flex flex-column align-items-center" style="margin-bottom: 84px;">
+{% extends "layout/base.html" %} {% block title %} | Add User {% endblock %} {%
+block body %}
+<div class="d-flex flex-column align-items-center" style="margin-bottom: 84px">
   <div class="d-flex justify-content-center mt-3">
     <div class="p-3 shadow-sm">
       <img src="{{ url_for('video') }}" width="600" />
@@ -19,11 +9,11 @@ body %}
   <!-- Button trigger modal -->
   <button
     type="submit"
-    style="width: 600px; font-size: 18px;"
+    style="width: 600px; font-size: 18px"
     class="btn btn-primary my-5"
     data-bs-toggle="modal"
     data-bs-target="#capturedImageModal"
-    onclick="onCaptureFaceImage('/user/capture-face')"
+    onclick="onCaptureFaceImage('/admin/user/detect-face')"
   >
     Capture Face
   </button>
@@ -40,7 +30,7 @@ body %}
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="capturedImageModalLabel">
-            Face Captured
+            Store Face | {{ user.name }}
           </h5>
           <button
             type="button"
@@ -50,41 +40,29 @@ body %}
           ></button>
         </div>
         <div class="modal-body">
-          <div class="d-flex justify-content-center">
-            <h5 id="capturedFaceImageErrorText" style="color: #DC2626"></h5>
+          <div class="d-flex justify-content-center my-4">
+            <h5 id="capturedFaceImageErrorText" style="color: #dc2626"></h5>
             <img id="capturedFaceImage" />
           </div>
-          <form action="{{ url_for('user.add_user') }}" method="POST">
+          <form action="{{ url_for('admin.user.store_face') }}" method="POST">
             <input
               id="faceBase64String"
               name="faceBase64String"
               type="hidden"
             />
-            <div class="mb-3">
-              <label for="fullName" class="form-label">Full Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="fullName"
-                name="fullName"
-              />
-            </div>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control"
-                id="email"
-                name="email"
-              />
-            </div>
+            <input
+              id="userId"
+              name="userId"
+              type="hidden"
+              value="{{ user.id }}"
+            />
             <div class="d-flex w-100 justify-content-end">
               <button
                 type="submit"
                 class="btn btn-primary w-100"
                 data-bs-dismiss="modal"
               >
-                Save User
+                Store Face
               </button>
             </div>
           </form>
