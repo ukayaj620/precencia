@@ -95,12 +95,13 @@ def load_user(user_id):
     return user_controller.fetch_by_id(user_id)
 
 from api.routes.service import service
+
 app.register_blueprint(service, url_prefix='/')
 
 from api.routes.user import user
-app.register_blueprint(user, url_prefix='/user')
-
 from api.routes.admin import admin
+
+admin.register_blueprint(user, url_prefix='/user')
 app.register_blueprint(admin, url_prefix='/admin')
 
 
