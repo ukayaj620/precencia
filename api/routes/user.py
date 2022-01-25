@@ -40,6 +40,7 @@ def index():
 
 
 @user.route('/create', methods=['POST'])
+@login_required
 def create():
     payload = request.form
     user = user_controller.fetch_by_email(email=payload['email'])
@@ -58,6 +59,7 @@ def create():
 
 
 @user.route('/update', methods=['POST'])
+@login_required
 def update():
     payload = request.form
 
@@ -78,6 +80,7 @@ def update():
 
 
 @user.route('/delete', methods=['POST'])
+@login_required
 def delete():
     payload = request.form
     user_controller.delete(user_id=payload['userId'])
