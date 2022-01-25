@@ -42,11 +42,23 @@
           <h1 class="fw-bold" style="color: #2563eb">Precencia</h1>
         </a>
         {% endif %}
-        <div>
-          {% if request.endpoint != 'index' and current_user.is_authenticated %}
-            <p class="fw-semibold m-0">Hello, {{ current_user.name }}</p>  
+        {% if request.endpoint != 'index' and current_user.is_authenticated %}
+        <div class="d-flex flex-row align-items-center">
+          {% if request.endpoint == 'admin.index' %}
+          <a href="{{ url_for('admin.user.index') }}" class="btn btn-primary mx-2"
+            >Users</a
+          >
           {% endif %}
+          {% if request.endpoint == 'admin.user.index' %}
+          <a href="{{ url_for('admin.index') }}" class="btn btn-primary mx-2"
+            >Home</a
+          >
+          {% endif %}
+          <div>
+            <p class="fw-semibold m-0">Hello, {{ current_user.name }}</p>  
+          </div>
         </div>
+        {% endif %}
       </div>
     </nav>
     {% block body %} {% endblock %}

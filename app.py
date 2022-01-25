@@ -57,10 +57,10 @@ def seed(args):
 
     if args == 'admin':
         user_controller.create(
-            name=Config.DUMMY_ADMIN_NAME,
-            email=Config.DUMMY_ADMIN_EMAIL,
+            name=Config.ADMIN_NAME,
+            email=Config.ADMIN_EMAIL,
             role_id=role_controller.fetch_by_name('admin').id,
-            password=Config.DUMMY_ADMIN_PASSWORD
+            password=Config.ADMIN_PASSWORD
         )
         print('Dummy admin has been seeded')
         return

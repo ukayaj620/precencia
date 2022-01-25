@@ -5,9 +5,9 @@ class Config:
     SECRET_KEY = str(os.environ.get('SECRET_KEY'))
     SQLALCHEMY_DATABASE_URI = str(os.environ.get('DATABASE_URL'))
 
-    DUMMY_ADMIN_NAME = str(os.environ.get('DUMMY_ADMIN_NAME'))
-    DUMMY_ADMIN_EMAIL = str(os.environ.get('DUMMY_ADMIN_EMAIL'))
-    DUMMY_ADMIN_PASSWORD = str(os.environ.get('DUMMY_ADMIN_PASSWORD'))
+    ADMIN_NAME = str(os.environ.get('ADMIN_NAME'))
+    ADMIN_EMAIL = str(os.environ.get('ADMIN_EMAIL'))
+    ADMIN_PASSWORD = str(os.environ.get('ADMIN_PASSWORD'))
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
