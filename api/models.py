@@ -23,7 +23,7 @@ class User(UserMixin, db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey(
         'role.id', ondelete='CASCADE'), unique=False, nullable=False)
     attendance = db.relationship(
-        'Attendance', back_populates='user', lazy=True)
+        'Attendance', back_populates='user', lazy=True, cascade="all, delete")
     role = db.relationship('Role', back_populates='user', lazy=True)
     encoding = db.relationship(
         'Encoding', back_populates='user', uselist=False)
