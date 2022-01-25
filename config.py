@@ -3,7 +3,7 @@ import os
 class Config:
     DEBUG = False
     SECRET_KEY = str(os.environ.get('SECRET_KEY'))
-    SQLALCHEMY_DATABASE_URI = str(os.environ.get('DATABASE_URL'))
+    SQLALCHEMY_DATABASE_URI = str(os.environ.get('DATABASE_URL') + os.environ.get('DATABASE_NAME'))
 
     ADMIN_NAME = str(os.environ.get('ADMIN_NAME'))
     ADMIN_EMAIL = str(os.environ.get('ADMIN_EMAIL'))
